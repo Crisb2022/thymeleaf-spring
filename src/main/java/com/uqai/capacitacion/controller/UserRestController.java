@@ -2,6 +2,7 @@ package com.uqai.capacitacion.controller;
 
 import com.uqai.capacitacion.configuration.PropertiesConfig;
 import com.uqai.capacitacion.dto.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -36,5 +37,26 @@ public class UserRestController {
     public UserDTO responseUser(@RequestBody UserDTO user) {
         if (!StringUtils.hasText(user.getEmail()) ) user.setEmail("No hay email ");
         return user;
+    }
+
+    // http://localhost:8090/rest/http-servlet-request?name=Samantha&lastName=Jara&age=25&email=sam@gmail.com
+    @GetMapping("/http-servlet-request")
+    public UserDTO httpServletRequest(HttpServletRequest request) {
+        var name = request.getParameter("name");
+        var lastName = request.getParameter("lastName");
+        var age = Integer.parseInt(request.getParameter("age"));
+        var email = request.getParameter("email");
+        return new UserDTO(name, lastName, age, email);
+    }
+
+    @GetMapping("/request-param")
+    public UserDTO requestParam(@RequestParam String name, @RequestParam String lastName, @RequestParam String age, @RequestParam String email) {
+        return new UserDTO(name, lastName, Integer.parseInt(age), email);
+    }
+
+    // http://localhost:8090/rest/path-param/Samantha/Jara/25/sam@gmail.com
+    @GetMapping("/path-param/{name}/{lastName}/{age}/{email}")
+    public UserDTO pathParam(@PathVariable String name, @PathVariable String lastName, @PathVariable(name = "age") int age, @PathVariable(name = "email") String email) {
+        return new UserDTO(name, lastName, age, email);
     }
 }
