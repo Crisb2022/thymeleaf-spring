@@ -4,7 +4,6 @@ import com.uqai.capacitacion.models.Product;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProductRepositoryImp implements ProductRepositoryInterface {
 

@@ -2,6 +2,7 @@ package com.uqai.capacitacion.service;
 
 import com.uqai.capacitacion.models.Product;
 import com.uqai.capacitacion.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
