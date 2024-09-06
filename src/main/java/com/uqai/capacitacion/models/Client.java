@@ -8,7 +8,6 @@ import org.springframework.web.context.annotation.RequestScope;
 
 @Data
 @Component
-@RequestScope
 @JsonIgnoreProperties({"targetSource", "advisors"})
 public class Client {
 

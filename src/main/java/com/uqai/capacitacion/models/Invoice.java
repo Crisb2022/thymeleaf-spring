@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 
@@ -17,10 +18,12 @@ import java.util.List;
  * contextos:
  *
  * singleton -> el uso es compartido entre sesiones de usuario (carrito de compras y como se comparte con los usuarios que usan)
- * prototype
+ * prototype -> Un bean con alcance de prototipo devolverá una instancia diferente cada vez que se solicite desde el contenedor.
+ *              No es 100% gestionado por el contenedor --
  * request -> dura solo la peticion almacena estado, y elimina el componente
  * session -> es unico para cada sesion de los usuarios (carrito de compras unico para cada usuario), dura hasta que se invalide la sesion
- * application -> es un contexto similar al singleton compartido por los usuarios, Singleton es una sola instancia-aplicacion, application es a nivel de servidor (varias aplicaciones corriendo dentro del servidor)
+ * application -> es un contexto similar al singleton compartido por los usuarios, Singleton es una sola instancia-aplicacion,
+ *                application es a nivel de servidor (varias aplicaciones corriendo dentro del servidor)
  * websocket
  */
 
@@ -47,6 +50,7 @@ public class Invoice {
      */
     @PostConstruct
     public void init() {
+        log.info("asmdmlkdmakmkdlsmaklmdk");
         client.setName("PostConstruct".concat(client.getName()));
     }
 
