@@ -9,7 +9,7 @@ import java.io.Serial;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
-public class ZohoException extends RuntimeException {
+public class CustomException extends RuntimeException {
 
     @Serial
     private static final long serialVersionUID = 7928841892203593027L;
@@ -17,7 +17,7 @@ public class ZohoException extends RuntimeException {
     private final HttpStatus status;
     private final int code;
 
-    public ZohoException(String message, HttpStatus status, int code) {
+    public CustomException(String message, HttpStatus status, int code) {
         super(message);
         this.status = status;
         this.code = code;

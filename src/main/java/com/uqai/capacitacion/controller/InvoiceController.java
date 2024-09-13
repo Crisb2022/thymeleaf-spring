@@ -1,8 +1,7 @@
 package com.uqai.capacitacion.controller;
 
-import com.uqai.capacitacion.exceptions.ZohoException;
+import com.uqai.capacitacion.exceptions.CustomException;
 import com.uqai.capacitacion.models.Invoice;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,7 @@ public class InvoiceController {
             return num;
         } catch (Exception e) {
             log.error("", e);
-            throw new ZohoException("fallo con exito", HttpStatus.BAD_REQUEST, 400);
+            throw new CustomException("fallo con exito", HttpStatus.BAD_REQUEST, 400);
         }
     }
 }
