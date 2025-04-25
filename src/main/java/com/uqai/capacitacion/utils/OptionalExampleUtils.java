@@ -6,7 +6,6 @@ import java.util.Optional;
 
 public class OptionalExampleUtils {
 
-
     // Proceso TakaTaka
 //    public static String obtenerIpRemota(Map<String, String> httpHeaders, String remoteAddr) {
 //        String ip = obtainXforwardedForHeaderIp(httpHeaders);
@@ -36,10 +35,12 @@ public class OptionalExampleUtils {
 //        return ip;
 //    }
 
+    // Refactor Optional
     public static String obtenerIpRemota(Map<String, String> httpHeaders, String remoteAddr) {
         return obtainXforwardedForHeaderIp(httpHeaders)
                 .map(ip -> ip.split(",")[0].trim())
-                .filter(ip -> !ip.isEmpty()).orElse(remoteAddr);
+                .filter(ip -> !ip.isEmpty())
+                .orElse(remoteAddr);
     }
 
     private static Optional<String> obtainXforwardedForHeaderIp(Map<String, String> httpHeaders) {
