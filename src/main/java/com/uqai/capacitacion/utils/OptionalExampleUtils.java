@@ -25,21 +25,25 @@ public class OptionalExampleUtils {
 //        return ip;
 //    }
 
-    public static Optional<String> obtenerIpRemota(Map<String, String> httpHeaders, String remoteAddr) {
-        return Optional.ofNullable(obtainXforwardedForHeaderIp(httpHeaders))
+//    private static String obtainXforwardedForHeaderIp(Map<String, String> httpHeaders) {
+//        return httpHeaders.getOrDefault("X-Forwarded-For", null);
+//    }
+//
+//    private static String obtainHeaderRemoteIp(Map<String, String> httpHeaders, String ip) {
+//        if (ip == null) {
+//            return httpHeaders.getOrDefault("X-Internal-Forwarded-For", null);
+//        }
+//        return ip;
+//    }
+
+    public static String obtenerIpRemota(Map<String, String> httpHeaders, String remoteAddr) {
+        return obtainXforwardedForHeaderIp(httpHeaders)
                 .map(ip -> ip.split(",")[0].trim())
-                .filter(ip -> !ip.isEmpty());
+                .filter(ip -> !ip.isEmpty()).orElse(remoteAddr);
     }
 
-    private static String obtainXforwardedForHeaderIp(Map<String, String> httpHeaders) {
-        return httpHeaders.getOrDefault("X-Forwarded-For", null);
-    }
-
-    private static String obtainHeaderRemoteIp(Map<String, String> httpHeaders, String ip) {
-        if (ip == null) {
-            return httpHeaders.getOrDefault("X-Internal-Forwarded-For", null);
-        }
-        return ip;
+    private static Optional<String> obtainXforwardedForHeaderIp(Map<String, String> httpHeaders) {
+        return Optional.ofNullable(httpHeaders.get("X-Forwarded-For")).or(() -> Optional.ofNullable(httpHeaders.get("X-Internal-Forwarded-For")));
     }
 
     // Clase principal para pruebas
@@ -52,7 +56,7 @@ public class OptionalExampleUtils {
 
         try {
             String ip = obtenerIpRemota(headers, remoteAddr);
-            System.out.println("IP obtenida: " + ip);  // Debe imprimir: 192.168.1.100
+            System.out.println("IP obtenida: " + ip);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -61,7 +65,7 @@ public class OptionalExampleUtils {
 
         try {
             String ip = obtenerIpRemota(headers, remoteAddr);
-            System.out.println("IP obtenida: " + ip);  // Debe imprimir: 10.0.0.1
+            System.out.println("IP obtenida: " + ip);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
